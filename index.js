@@ -33,6 +33,16 @@ async function run() {
       const result = await cursor.toArray();
       res.send(result);
     });
+    // read specific brand product data
+    app.get("/products/:brand", async (req, res) => {
+      const brand = req.params.brand;
+      console.log(brand);
+      const query = { brandName: brand };
+
+      const cursor = productCollection.find(query);
+      const result = await cursor.toArray();
+      res.send(result);
+    });
 
     // Create Products data
     app.post("/products", async (req, res) => {
