@@ -26,6 +26,7 @@ async function run() {
     // Connect the client to the server	(optional starting in v4.7)
     await client.connect();
     const productCollection = client.db("productDB").collection("products");
+    const cart = client.db("productDB").collection("cart");
 
     // Read All products data
     app.get("/products", async (req, res) => {
@@ -36,7 +37,7 @@ async function run() {
     // read specific brand product data
     app.get("/products/:brand", async (req, res) => {
       const brand = req.params.brand;
-      console.log(brand);
+      // console.log(brand);
       const query = { brandName: brand };
 
       const cursor = productCollection.find(query);
@@ -47,8 +48,14 @@ async function run() {
     // Create Products data
     app.post("/products", async (req, res) => {
       const newProduct = req.body;
-      console.log(newProduct);
       const result = await productCollection.insertOne(newProduct);
+      res.send(result);
+    });
+    // Create Cart data
+    app.post("/cart", async (req, res) => {
+      const newProduct = req.body;
+      console.log(newProduct);
+      const result = await cart.insertOne(newProduct);
       res.send(result);
     });
 
