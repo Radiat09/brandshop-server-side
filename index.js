@@ -45,6 +45,13 @@ async function run() {
       res.send(result);
     });
 
+    // Read All products data
+    app.get("/cart", async (req, res) => {
+      const cursor = cart.find();
+      const result = await cursor.toArray();
+      res.send(result);
+    });
+
     // Create Products data
     app.post("/products", async (req, res) => {
       const newProduct = req.body;
@@ -54,7 +61,6 @@ async function run() {
     // Create Cart data
     app.post("/cart", async (req, res) => {
       const newProduct = req.body;
-      console.log(newProduct);
       const result = await cart.insertOne(newProduct);
       res.send(result);
     });
