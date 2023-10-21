@@ -54,9 +54,17 @@ async function run() {
       res.send(result);
     });
 
-    // Read All products data
+    // Read All cart products data
     app.get("/cart", async (req, res) => {
       const cursor = cart.find();
+      const result = await cursor.toArray();
+      res.send(result);
+    });
+    // Read specific cart products data
+    app.get("/cart/:email", async (req, res) => {
+      const uEmail = req.params.email;
+      const query = { email: uEmail };
+      const cursor = cart.find(query);
       const result = await cursor.toArray();
       res.send(result);
     });
